@@ -17,6 +17,21 @@ file_menu = tk.Menu(menubar, tearoff=0)
 # '파일' 메뉴를 메뉴바에 추가
 menubar.add_cascade(label="파일", menu=file_menu)
 
+# '편집' 메뉴 생성
+edit_menu = tk.Menu(menubar, tearoff=0)
+# '편집' 메뉴를 메뉴바에 추가
+menubar.add_cascade(label="편집", menu=edit_menu)
+
+# '편집' 메뉴에 항목 추가
+edit_menu.add_command(label="실행 취소", command=lambda: text_area.edit_undo())
+edit_menu.add_command(label="다시 실행", command=lambda: text_area.edit_redo())
+edit_menu.add_separator()
+edit_menu.add_command(label="잘라내기", command=lambda: text_area.event_generate("<<Cut>>"))
+edit_menu.add_command(label="복사", command=lambda: text_area.event_generate("<<Copy>>"))
+edit_menu.add_command(label="붙여넣기", command=lambda: text_area.event_generate("<<Paste>>"))
+edit_menu.add_separator()
+edit_menu.add_command(label="모두 선택", command=lambda: text_area.tag_add("sel", "1.0", "end"))
+
 # '파일' 메뉴에 항목 추가
 file_menu.add_command(label="새로 만들기")
 file_menu.add_command(label="열기")
@@ -29,7 +44,7 @@ file_menu.add_command(label="종료", command=window.destroy)
 window.config(menu=menubar)
 
 # 텍스트를 입력하고 편집할 수 있는 Text 위젯 생성
-text_area = tk.Text(window)
+text_area = tk.Text(window, undo=True) # undo/redo 기능을 위해 undo=True 옵션 추가
 text_area.pack(expand=True, fill='both') # 창의 크기가 변경될 때 텍스트 영역도 함께 조절되도록 설정
 
 # 윈도우가 화면에 표시되고 사용자 입력을 기다립니다.
