@@ -9,11 +9,28 @@ window.title("메모장")
 # 윈도우 크기 설정 (가로 800, 세로 600)
 window.geometry("800x600")
 
-# "메모장을 만들어봐요" 텍스트를 표시할 라벨(Label) 위젯 생성
-label = tk.Label(window, text="메모장을 만들어봐요", font=("Arial", 24))
+# 메뉴바 생성
+menubar = tk.Menu(window)
 
-# 라벨을 창의 중앙에 배치합니다. expand=True 옵션은 위젯이 가질 수 있는 모든 공간을 차지하도록 합니다.
-label.pack(expand=True)
+# '파일' 메뉴 생성
+file_menu = tk.Menu(menubar, tearoff=0)
+# '파일' 메뉴를 메뉴바에 추가
+menubar.add_cascade(label="파일", menu=file_menu)
+
+# '파일' 메뉴에 항목 추가
+file_menu.add_command(label="새로 만들기")
+file_menu.add_command(label="열기")
+file_menu.add_command(label="저장")
+file_menu.add_command(label="다른 이름으로 저장")
+file_menu.add_separator()  # 구분선 추가
+file_menu.add_command(label="종료", command=window.destroy)
+
+# 윈도우의 메뉴로 menubar를 설정
+window.config(menu=menubar)
+
+# 텍스트를 입력하고 편집할 수 있는 Text 위젯 생성
+text_area = tk.Text(window)
+text_area.pack(expand=True, fill='both') # 창의 크기가 변경될 때 텍스트 영역도 함께 조절되도록 설정
 
 # 윈도우가 화면에 표시되고 사용자 입력을 기다립니다.
 window.mainloop()
